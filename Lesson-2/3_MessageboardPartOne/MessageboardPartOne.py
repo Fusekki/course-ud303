@@ -34,10 +34,6 @@ class MessageHandler(BaseHTTPRequestHandler):
         message = p['message'][0]
         print(message)
 
-        p = parse_qs(data)
-        message = p['message'][0]
-        print(message)
-
         # Send the "message" field back as the response.
         self.send_response(200)
         self.send_header('Content-type', 'text/plain; charset=utf-8')
