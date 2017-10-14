@@ -55,7 +55,13 @@ class MessageHandler(BaseHTTPRequestHandler):
 
         # 2. Put the response together out of the form and the stored messages.
 
+        self.wfile.write(form.encode())
+        print(memory)
+        for item in memory:
+            self.wfile.write(item.encode())
+
         # 3. Send the response.
+        self.send_response(200)
 
 if __name__ == '__main__':
     server_address = ('', 8000)
