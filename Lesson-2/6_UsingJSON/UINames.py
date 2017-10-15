@@ -16,9 +16,13 @@ def SampleRecord():
                      timeout=2.0)
     # 1. Add a line of code here to decode JSON from the response.
 
-    return "My name is {} {} and the PIN on my card is {}.".format(
-        # 2. Add the correct fields from the JSON data structure.
-    )
+    name = r.json()['name']
+    surname = r.json()['surname']
+    cc = r.json()['credit_card']['pin']
+
+    # 2. Add the correct fields from the JSON data structure.
+    return "My name is {} {} and the PIN on my card is {}.".format(name, surname, cc)
+
 
 if __name__ == '__main__':
     print(SampleRecord())
