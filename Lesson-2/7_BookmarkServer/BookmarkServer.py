@@ -74,11 +74,15 @@ def CheckURI(uri, timeout=5):
     False if that GET request returns any other response, or doesn't return
     (i.e. times out).
     '''
-    # 1. Write this function.  Delete the following line.
-    r = requests.get(uri,timeout=timeout)
-    if r.status_code == 200:
-        return True
-    else:
+    # # 1. Write this function.  Delete the following line.
+    try:
+        r = requests.get(uri, timeout=timeout)
+        # print(r.status_code)
+        if r.status_code == 200:
+            return True
+        else:
+            return False
+    except requests.RequestException:
         return False
 
 class Shortener(http.server.BaseHTTPRequestHandler):
@@ -86,16 +90,12 @@ class Shortener(http.server.BaseHTTPRequestHandler):
         # A GET request will either be for / (the root path) or for /some-name.
         # Strip off the / and we have either empty string or a name.
         name = unquote(self.path[1:])
-        print(name)
 
         if name:
             if name in memory:
                 # 2. Send a 303 redirect to the long URI in memory[name].
                 #    Delete the following line.
-                # raise NotImplementedError("Step 2 isn't written yet.")
-                self.send_response(303)
-                self.send_header('Location', name)
-                self.end_headers()
+                raise NotImplementedError("Step 2 isn't written yet.")
             else:
                 # We don't know that name! Send a 404 error.
                 self.send_response(404)
