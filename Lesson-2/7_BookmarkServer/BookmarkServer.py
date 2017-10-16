@@ -75,19 +75,11 @@ def CheckURI(uri, timeout=5):
     (i.e. times out).
     '''
     # 1. Write this function.  Delete the following line.
-    try:
-        r = requests.get(uri,timeout=timeout)
-        print (r.status_code)
-        if r.status_code == 200:
-            return True
-        else:
-            return False
-    # except requests.RequestException as e:
-    #     print("Couldn't communicate with the server. ({})\n"
-    #           "If it's running, take a look at its output.").format(e)
-    #     return False
-
-
+    r = requests.get(uri,timeout=timeout)
+    if r.status_code == 200:
+        return True
+    else:
+        return False
 
 class Shortener(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -100,7 +92,10 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             if name in memory:
                 # 2. Send a 303 redirect to the long URI in memory[name].
                 #    Delete the following line.
-                raise NotImplementedError("Step 2 isn't written yet.")
+                # raise NotImplementedError("Step 2 isn't written yet.")
+                self.send_response(303)
+                self.send_header('Location', name)
+                self.end_headers()
             else:
                 # We don't know that name! Send a 404 error.
                 self.send_response(404)
